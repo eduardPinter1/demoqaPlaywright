@@ -1,12 +1,42 @@
 //e p ep - user exist
 const {test,request, expect} = require('@playwright/test');
-const {ApiUtils} = require("../../utils/ApiUtils");
+const urlApi = JSON.parse(JSON.stringify(require('../../fixtures/ApiUrl.json')));
+const userData = JSON.parse(JSON.stringify(require('../../fixtures/userData.json')));
 
-let response;
-test.beforeAll( async()=>
-{
-   const apiContext = await request.newContext();
 
+let apiContext;
+
+test.beforeAll(async() => {
+   apiContext = await request.newContext();
 })
 
-//test.
+test("Successful login", async () => {
+   const registrationResponse =  await apiContext.post(urlApi.loginApi,
+   {
+       data: {
+           "password" : userData.login.password,
+           "userName" : userData.login.username,
+       }
+
+    } )
+   expect(registrationResponse.status()).toBe(200);
+   const regResponseJson = await registrationResponse.json();
+   console.log(regResponseJson);
+})
+
+test("Unsuccessful login", async () => {
+   const registrationResponse =  await apiContext.post(urlApi.loginApi,
+   {
+       data: {
+           "password" : userData.login.password,
+           "userName" : userData.login.username+"e",
+       }
+
+    } )
+   expect(registrationResponse.status()).toBe(200);
+   const responseBody = JSON.parse(await registrationResponse.text());
+   console.log(responseBody.result);
+   expect(responseBody.result).toBe(userData.login.result)
+   const regResponseJson = await registrationResponse.json();
+   console.log(regResponseJson);
+})

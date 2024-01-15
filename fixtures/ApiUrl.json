@@ -1,5 +1,6 @@
 {
     "registerApi": "https://demoqa.com/Account/v1/User",
-    "loginApi": "https://demoqa.com/Account/v1/Login"
+    "loginApi": "https://demoqa.com/Account/v1/GenerateToken",
+    "books": "https://demoqa.com/BookStore/v1/Books"
 
 }
