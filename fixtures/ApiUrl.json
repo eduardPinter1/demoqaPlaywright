@@ -1,0 +1,5 @@
+{
+    "registerApi": "https://demoqa.com/Account/v1/User",
+    "loginApi": "https://demoqa.com/Account/v1/Login"
+
+}

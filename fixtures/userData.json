@@ -1,0 +1,12 @@
+{
+    "registration": {
+        "username": "ep",
+        "passwordPass": "Test123!",
+        "passwordWrong": "test1234"
+    },
+    "login": {
+        "username": "ep2",
+        "passwordPass": "Test123!"
+    }
+
+}
