@@ -1,0 +1,13 @@
+const OK = 200;
+const CREATED = 201;
+const NOT_FOUND = 404;
+const BAD_REQUEST = 400;
+const NOT_ACCEPTABLE = 406;
+const SERVER_ERROR = 500;
+
+exports.OK = OK;
+exports.CREATED = CREATED;
+exports.NOT_FOUND = NOT_FOUND;
+exports.BAD_REQUEST = BAD_REQUEST;
+exports.SERVER_ERROR = SERVER_ERROR;
+exports.NOT_ACCEPTABLE = NOT_ACCEPTABLE;
