@@ -20,8 +20,7 @@ test("Successful login", async () => {
 
     } )
    expect(registrationResponse.status()).toBe(200);
-   const regResponseJson = await registrationResponse.json();
-   console.log(regResponseJson);
+
 })
 
 test("Unsuccessful login", async () => {
@@ -35,8 +34,7 @@ test("Unsuccessful login", async () => {
     } )
    expect(registrationResponse.status()).toBe(200);
    const responseBody = JSON.parse(await registrationResponse.text());
-   console.log(responseBody.result);
-   expect(responseBody.result).toBe(userData.login.result)
-   const regResponseJson = await registrationResponse.json();
-   console.log(regResponseJson);
+   expect(responseBody.result).toBe(userData.login.resultMessage)
+
 })
+
