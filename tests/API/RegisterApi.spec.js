@@ -21,7 +21,6 @@ test.beforeAll(async() => {
 
 test("Registration successful", async () => {
     userCred.userName = userData.registration.username + utilsFunctions.getRandomInt(1000);
-    console.log(userCred);
     await apiUtil.validRegistration(userCred,CREATED,userCred.userName);
 
 })

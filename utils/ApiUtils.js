@@ -48,7 +48,7 @@ class ApiUtils
          expect(registrationResponse.status()).toBe(statusCode);
     }
 
-    async nonValidLogin(credentials, statusCode, emptyFields, errorMessage){
+    async nonValidLogin(credentials, statusCode, emptyFields = true, errorMessage){
         const registrationResponse = await this.apiContext.post(urlApi.loginApi,
             {
                data: credentials
@@ -56,11 +56,13 @@ class ApiUtils
             })
          expect(registrationResponse.status()).toBe(statusCode);
          const responseBody = await this.utilsFunctions.parseResText(registrationResponse);
-         if(emptyFields === true){
-            await expect(responseBody.message).toBe(errorMessage)
-         }
-         else
-         await expect(responseBody.result).toBe(errorMessage)
+         if (!emptyFields) {
+            await expect(responseBody.result).toBe(errorMessage);
+            return;
+          }
+      
+          await expect(responseBody.message).toBe(errorMessage);
+          return;
          
     }
 

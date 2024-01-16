@@ -10,11 +10,6 @@ let credentials = {
    "password": userData.login.password,
    "userName": userData.login.username
 }
-const credEmptyUsername = {
-   "password": userData.login.password,
-   "userName": ""
-}
-
 
 test.beforeAll(async () => {
    apiContext = await request.newContext();
