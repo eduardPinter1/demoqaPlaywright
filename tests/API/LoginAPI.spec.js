@@ -37,7 +37,7 @@ test("Unsuccessful login", async () => {
          data: credentialsNegative
 
       })
-   expect(registrationResponse.status()).toBe(200);
+   expect(registrationResponse.status()).toBe(400);
    const responseBody = await utilsFunctions.parseResText(registrationResponse);
    expect(responseBody.result).toBe(userData.login.resultMessage)
 
