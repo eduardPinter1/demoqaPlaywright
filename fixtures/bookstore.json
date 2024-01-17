@@ -1,0 +1,5 @@
+{
+  "notAuthMessage": "User not authorized!",
+  "idIncorrectMessage": "User Id not correct!",
+  "wrongBookIsbn": "ISBN supplied is not available in Books Collection!"
+}
