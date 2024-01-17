@@ -1,7 +1,7 @@
 const { test, request } = require('@playwright/test');
 const { BAD_REQUEST, NOT_ACCEPTABLE, OK } = require('../../utils/statusCodes');
 const userData = JSON.parse(JSON.stringify(require('../../fixtures/userData.json')));
-const { ApiUtils } = require('../../utils/ApiUtils');
+const { LoginApiUtils } = require('../../utils/LoginApiUtils');
 
 let apiUtil;
 let apiContext;
@@ -13,7 +13,7 @@ let credentials = {
 
 test.beforeAll(async () => {
    apiContext = await request.newContext();
-   apiUtil = new ApiUtils(apiContext);
+   apiUtil = new LoginApiUtils(apiContext);
 })
 
 test("Successful login", async () => {
