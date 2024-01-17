@@ -11,6 +11,11 @@
         "username": "ep3",
         "password": "Test123!",
         "resultMessage": "User authorization failed."
+    },
+    "books":{
+        "notAuthMessage": "User not authorized!",
+        "idIncorrectMessage": "User Id not correct!",
+        "wrongBookIsbn": "ISBN supplied is not available in Books Collection!"
     }
 
 }
