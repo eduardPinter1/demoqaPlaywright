@@ -2,11 +2,15 @@
     "registration": {
         "username": "ep",
         "passwordPass": "Test123!",
-        "passwordWrong": "test1234"
+        "passwordWrong": "test1234",
+        "passwordMessage": "Passwords must have at least one non alphanumeric character, one digit ('0'-'9'), one uppercase ('A'-'Z'), one lowercase ('a'-'z'), one special character and Password must be eight characters or longer.",
+        "usernamePresentMessage": "User exists!",
+        "missingCredentialsMessage": "UserName and Password required."
     },
     "login": {
-        "username": "ep2",
-        "passwordPass": "Test123!"
+        "username": "ep3",
+        "password": "Test123!",
+        "resultMessage": "User authorization failed."
     }
 
 }
