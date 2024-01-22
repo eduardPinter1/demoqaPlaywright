@@ -1,86 +1,94 @@
-const { expect } = require("@playwright/test");
+const { expect, request } = require("@playwright/test");
 const urlApi = JSON.parse(JSON.stringify(require("../fixtures/ApiUrl.json")));
 const booksData = JSON.parse(
   JSON.stringify(require("../fixtures/bookstore.json"))
 );
+const { DELETED, CREATED } = require('./statusCodes');
 const { UtilsFunctions } = require("./UtilsFunctions");
+let utilsFunctions = new UtilsFunctions();
 
-class BookstoreApiUtils {
-  constructor(apiContext) {
-    this.apiContext = apiContext;
-    this.utilsFunctions = new UtilsFunctions();
-
-  }
+export class BookstoreApiUtils {
 
   async getBookIsbnByIndex(index) {
-    const getBooks = await this.apiContext.get(urlApi.books, {
+    const apiContext = await request.newContext();
+    const getBooks = await apiContext.get(urlApi.books, {
       headers: {
         "Content-Type": "application/json"
       },
     });
-    const responseBody = await this.utilsFunctions.parseResText(getBooks);
-    return responseBody.books[index].isbn;
+    return (await utilsFunctions.parseResText(getBooks)).books[index].isbn;
+
   }
 
-  async postBooks(
-    isbn,
-    userId,
-    token,
+  async postBooks({
+    isbn = "",
+    userId = "",
+    token = "",
+    statusCode = CREATED,
     incorrectIsbn = false,
     wrongUserId = false,
     noAuth = false
-  ) {
-    const addBooks = await this.apiContext.post(urlApi.books, {
+  }) {
+    const apiContext = await request.newContext();
+    const addBooks = await apiContext.post(urlApi.books, {
       data: {
-        collectionOfIsbns: [{ isbn: isbn }],
-        userId: userId,
+        'collectionOfIsbns': [{ 'isbn': isbn }],
+        'userId': userId,
       },
       headers: {
-        Authorization: "Bearer " + token,
+        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
     });
-    const responseBody = await this.utilsFunctions.parseResText(addBooks);
+    expect.soft(addBooks.status()).toBe(statusCode);
+    const responseBody = await utilsFunctions.parseResText(addBooks);
+    console.log(responseBody);
     if (incorrectIsbn) {
-      expect(await responseBody.message).toBe(booksData.wrongBookIsbn);
-      return;
+      return expect(await responseBody.message).toBe(booksData.wrongBookIsbn);
     }
     if (wrongUserId) {
-      expect(await responseBody.message).toBe(booksData.idIncorrectMessage);
-      return;
+      return expect(await responseBody.message).toBe(booksData.idIncorrectMessage);
     }
     if (noAuth) {
-      expect(await responseBody.message).toBe(booksData.notAuthMessage);
-      return;
+      return expect(await responseBody.message).toBe(booksData.notAuthMessage);
     }
-    return;
   }
 
-  async deleteAllBooks(userId, token, idEmptyIncorrect = false, tokenEmptyIncorrect = false) {
-    const deleteAllBooks = await this.apiContext.delete(urlApi.books + `?UserId=${userId}`,
+  async deleteAllBooks({
+    userId = "",
+    token = "",
+    idEmptyIncorrect = false,
+    statusCode = DELETED,
+    tokenEmptyIncorrect = false }) {
+    const apiContext = await request.newContext();
+    const deleteAllBooks = await apiContext.delete(urlApi.books + `?UserId=${userId}`,
       {
         headers: {
-          'Authorization': "Bearer " + token,
+          Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json'
         }
 
       })
-
+    expect.soft(deleteAllBooks.status()).toBe(statusCode);
     if (idEmptyIncorrect === true) {
-      const responseBody = await this.utilsFunctions.parseResText(deleteAllBooks);
-      expect(responseBody.message).toBe(booksData.idIncorrectMessage);
-      return;
+      const responseBody = await utilsFunctions.parseResText(deleteAllBooks);
+      return expect(responseBody.message).toBe(booksData.idIncorrectMessage);
     }
     if (tokenEmptyIncorrect === true) {
-      const responseBody = await this.utilsFunctions.parseResText(deleteAllBooks);
-      expect(responseBody.message).toBe(booksData.notAuthMessage);
-      return;
+      const responseBody = await utilsFunctions.parseResText(deleteAllBooks);
+      return expect(responseBody.message).toBe(booksData.notAuthMessage);
     }
     return;
   }
 
-  async deleteBookByIsbn(isbn, userId, token) {
-    const deleteBooks = await this.apiContext.delete(urlApi.book,
+  async deleteBookByIsbn({
+    isbn = "",
+    userId = "",
+    token = "",
+    statusCode = DELETED
+  }) {
+    const apiContext = await request.newContext();
+    const deleteBooks = await apiContext.delete(urlApi.book,
       {
         data: {
           isbn: isbn,
@@ -93,6 +101,6 @@ class BookstoreApiUtils {
         },
 
       })
+    expect(deleteBooks.status).toBe(statusCode)
   }
 }
-module.exports = { BookstoreApiUtils };
