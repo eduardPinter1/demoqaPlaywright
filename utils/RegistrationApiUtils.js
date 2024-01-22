@@ -1,5 +1,5 @@
 const { expect, request } = require('@playwright/test');
-const { UtilsFunctions } = require('./UtilsFunctions');
+const { UtilsFunctions } = require('./utilsFunctions');
 let utilFunctions = new UtilsFunctions();
 
 const urlApi = utilFunctions.parseLocalJson('../fixtures/ApiUrl.json');

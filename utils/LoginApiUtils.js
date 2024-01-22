@@ -1,5 +1,5 @@
 const { expect, request } = require('@playwright/test');
-const { UtilsFunctions } = require('./UtilsFunctions');
+const { UtilsFunctions } = require('./utilsFunctions');
 const { OK } = require('./statusCodes');
 
 let utilFunctions = new UtilsFunctions();
@@ -9,7 +9,7 @@ const userData = utilFunctions.parseLocalJson('../fixtures/userData.json');
 export class LoginApiUtils {
 
     async getTokenAndUserId({
-        payload = ""
+        payload = "validLogin"
     }) {
 
         let response = {};
@@ -30,7 +30,7 @@ export class LoginApiUtils {
     }
 
     async loginUser({
-        payload = "",
+        payload = "validLogin",
         validLogin = true,
         statusCode = OK,
         respMessage = false,
@@ -56,7 +56,7 @@ export class LoginApiUtils {
     }
 
     async authorizeUser({
-        payload = "",
+        payload = "validLogin",
         statusResp = OK,
         fail = false
     }) {

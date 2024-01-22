@@ -14,7 +14,7 @@ test.beforeEach(async ({ loginApiUtils, addBooksApi }) => {
 
 })
 
-test.describe("Negative cases", async () => {
+test.describe("Add books to user's collection tests", async () => {
     test("Post books - incorrect book isbn", async ({ addBooksApi }) => {
         await addBooksApi.postBooks({ isbn: `${bookIsbn}4`, userId: userId, token: token, incorrectIsbn: true, statusCode: BAD_REQUEST });
     })

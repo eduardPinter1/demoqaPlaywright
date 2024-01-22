@@ -2,7 +2,7 @@ import { test } from '../../modules/base';
 const { BAD_REQUEST, OK } = require('../../utils/statusCodes');
 const userData = JSON.parse(JSON.stringify(require('../../fixtures/userData.json')));
 
-test.describe("test cases", async () => {
+test.describe("Login flow test cases", async () => {
 
    test("Unsuccessful login - username empty", async ({ loginApiUtils }) => {
       await loginApiUtils.loginUser({ payload: "usernameEmpty", emptyFields: true, statusCode: BAD_REQUEST, validLogin: false, messageString: userData.registration.missingCredentialsMessage, respMessage: true })
@@ -70,7 +70,7 @@ test.describe("test cases", async () => {
    })
 
    test("Successful login", async ({ loginApiUtils }) => {
-      await loginApiUtils.loginUser({ payload: "validLogin" });
+      await loginApiUtils.loginUser({});
    })
 })
 

@@ -1,6 +1,6 @@
 const { expect, request } = require('@playwright/test');
 const { DELETED } = require('./statusCodes');
-const { UtilsFunctions } = require('./UtilsFunctions');
+const { UtilsFunctions } = require('./utilsFunctions');
 let utilFunctions = new UtilsFunctions();
 
 export class DeleteUserApiUtils {

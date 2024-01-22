@@ -1,5 +1,5 @@
 const { expect, request } = require("@playwright/test");
-const { UtilsFunctions } = require("./UtilsFunctions");
+const { UtilsFunctions } = require("./utilsFunctions");
 let utilsFunctions = new UtilsFunctions();
 const urlApi = utilsFunctions.parseLocalJson("../fixtures/ApiUrl.json");
 const booksData = utilsFunctions.parseLocalJson("../fixtures/bookstore.json");
@@ -61,7 +61,6 @@ export class BookstoreApiUtils {
       {
         headers: utilsFunctions.getHeaders(token),
       })
-    //expect.soft(deleteAllBooks.status()).toBe(statusCode);
     if (idEmptyIncorrect) {
       const responseBody = await utilsFunctions.parseResText(deleteAllBooks);
       return expect(responseBody.message).toBe(booksData.idIncorrectMessage);

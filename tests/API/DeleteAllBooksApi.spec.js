@@ -5,8 +5,6 @@ let token;
 let userId;
 let booksIsbn = [];
 
-//test.describe.configure({ mode: 'serial' });
-
 test.beforeAll(async ({ loginApiUtils, addBooksApi }) => {
     let response = await loginApiUtils.getTokenAndUserId({ payload: "validLogin" });
     loginApiUtils.authorizeUser({ payload: "validLogin" });
@@ -22,11 +20,7 @@ test.afterEach(async ({ addBooksApi }) => {
     await addBooksApi.deleteAllBooks({ userId: userId, token: token });
 })
 
-// test.afterAll(async ({ addBooksApi }) => {
-//     await addBooksApi.deleteAllBooks({ userId: userId, token: token });
-// })
-
-test.describe("Test cases", async () => {
+test.describe("Delete All books from users collection tests", async () => {
 
     test("Delete All Books - wrong userId", async ({ addBooksApi }) => {
         await addBooksApi.deleteAllBooks({ userId: `${userId}e`, token: token, idEmptyIncorrect: true, statusCode: UNAUTHORIZED });
