@@ -6,18 +6,12 @@ let userId;
 let bookIsbn;
 
 test.beforeEach(async ({ loginApiUtils, addBooksApi }) => {
-    let response = await loginApiUtils.getTokenAndUserId({ username: userData.login.username, password: userData.login.password });
-    loginApiUtils.authorizeUser({ username: userData.login.username, password: userData.login.password });
+    let response = await loginApiUtils.getTokenAndUserId({ payload: "validLogin" });
+    loginApiUtils.authorizeUser({ payload: "validLogin" });
     token = await response.token;
     userId = await response.userId;
     bookIsbn = await addBooksApi.getBookIsbnByIndex(0);
 
-})
-
-test.describe("Positive cases", async () => {
-    test("Post books - happy flow", async ({ addBooksApi }) => {
-        await addBooksApi.postBooks({ isbn: bookIsbn, userId: userId, token: token });
-    })
 })
 
 test.describe("Negative cases", async () => {
@@ -45,7 +39,7 @@ test.describe("Negative cases", async () => {
         await addBooksApi.postBooks({ isbn: 1, userId: userId, token: token, incorrectIsbn: true, statusCode: BAD_REQUEST });
     })
 
-    test("Post books - isbn double", async ({ addBooksApi }) => {
+    test("Post books - isbn float", async ({ addBooksApi }) => {
         await addBooksApi.postBooks({ isbn: 1.1, userId: userId, token: token, incorrectIsbn: true, statusCode: BAD_REQUEST });
     })
 
@@ -69,7 +63,7 @@ test.describe("Negative cases", async () => {
         await addBooksApi.postBooks({ isbn: bookIsbn, userId: 1, token: token, wrongUserId: true, statusCode: UNAUTHORIZED });
     })
 
-    test("Post books - userId double", async ({ addBooksApi }) => {
+    test("Post books - userId float", async ({ addBooksApi }) => {
         await addBooksApi.postBooks({ isbn: bookIsbn, userId: 1.1, token: token, wrongUserId: true, statusCode: UNAUTHORIZED });
     })
 
@@ -93,7 +87,7 @@ test.describe("Negative cases", async () => {
         await addBooksApi.postBooks({ isbn: bookIsbn, userId: userId, token: 1, noAuth: true, statusCode: UNAUTHORIZED });
     })
 
-    test("Post books - token double", async ({ addBooksApi }) => {
+    test("Post books - token float", async ({ addBooksApi }) => {
         await addBooksApi.postBooks({ isbn: bookIsbn, userId: userId, token: 1.1, noAuth: true, statusCode: UNAUTHORIZED });
     })
 
@@ -111,6 +105,10 @@ test.describe("Negative cases", async () => {
 
     test("Post books - token null", async ({ addBooksApi }) => {
         await addBooksApi.postBooks({ isbn: bookIsbn, userId: userId, token: null, noAuth: true, statusCode: UNAUTHORIZED });
+    })
+
+    test("Post books - happy flow", async ({ addBooksApi }) => {
+        await addBooksApi.postBooks({ isbn: bookIsbn, userId: userId, token: token });
     })
 })
 

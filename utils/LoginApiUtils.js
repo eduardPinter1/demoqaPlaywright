@@ -9,25 +9,19 @@ const userData = utilFunctions.parseLocalJson('../fixtures/userData.json');
 export class LoginApiUtils {
 
     async getTokenAndUserId({
-        username = "ep3",
-        password = "Test123!"
+        payload = ""
     }) {
 
         let response = {};
         const apiContext = await request.newContext();
         const loginResponse = await apiContext.post(urlApi.generateTokenLogin,
             {
-                data: utilFunctions.getPayLoad({ username: username, password: password })
+                data: utilFunctions.getPayLoad(payload)
             })
         const loginResponseJson = await loginResponse.json();
         response.token = await loginResponseJson.token;
         const authResp = await apiContext.post(urlApi.loginUserId, {
-            data: utilFunctions.getPayLoad({ username: username, password: password }),
-            headers: {
-                'Accept': '*/*',
-                'Connection': "keep-alive",
-                'Content-Type': 'application/json',
-            },
+            data: utilFunctions.getPayLoad(payload),
         })
         const authRespJson = await utilFunctions.parseResText(authResp);
         response.userId = authRespJson.userId;
@@ -36,8 +30,7 @@ export class LoginApiUtils {
     }
 
     async loginUser({
-        userName = "ep3",
-        password = "Test123!",
+        payload = "",
         validLogin = true,
         statusCode = OK,
         respMessage = false,
@@ -46,7 +39,7 @@ export class LoginApiUtils {
         const apiContext = await request.newContext();
         const loginResp = await apiContext.post(urlApi.generateTokenLogin,
             {
-                data: utilFunctions.getPayLoad({ username: userName, password: password })
+                data: utilFunctions.getPayLoad(payload)
             })
         expect.soft(loginResp.status()).toBe(statusCode);
         if (!validLogin) {
@@ -63,15 +56,14 @@ export class LoginApiUtils {
     }
 
     async authorizeUser({
-        username = "ep3",
-        password = "Test123!",
+        payload = "",
         statusResp = OK,
         fail = false
     }) {
         const apiContext = await request.newContext();
         const response = await apiContext.post(urlApi.authorizeUser,
             {
-                data: utilFunctions.getPayLoad({ username: username, password: password })
+                data: utilFunctions.getPayLoad(payload)
             })
         expect.soft(response.status()).toBe(statusResp);
         let respJson = await utilFunctions.parseResText(response);

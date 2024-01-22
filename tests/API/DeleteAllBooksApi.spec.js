@@ -5,11 +5,11 @@ let token;
 let userId;
 let booksIsbn = [];
 
-test.describe.configure({ mode: 'serial' });
+//test.describe.configure({ mode: 'serial' });
 
 test.beforeAll(async ({ loginApiUtils, addBooksApi }) => {
-    let response = await loginApiUtils.getTokenAndUserId({ username: userData.login.username, password: userData.login.password });
-    loginApiUtils.authorizeUser({ username: userData.login.username, password: userData.login.password });
+    let response = await loginApiUtils.getTokenAndUserId({ payload: "validLogin" });
+    loginApiUtils.authorizeUser({ payload: "validLogin" });
     token = await response.token;
     userId = await response.userId;
     booksIsbn.push(await addBooksApi.getBookIsbnByIndex(0), await addBooksApi.getBookIsbnByIndex(1));
@@ -18,18 +18,15 @@ test.beforeAll(async ({ loginApiUtils, addBooksApi }) => {
     });
 })
 
-test.afterAll(async ({ addBooksApi }) => {
+test.afterEach(async ({ addBooksApi }) => {
     await addBooksApi.deleteAllBooks({ userId: userId, token: token });
 })
 
-test.describe("Positive test cases", async ({ }) => {
+// test.afterAll(async ({ addBooksApi }) => {
+//     await addBooksApi.deleteAllBooks({ userId: userId, token: token });
+// })
 
-    test("Delete All Books - happy flow", async ({ addBooksApi }) => {
-        await addBooksApi.deleteAllBooks({ userId: userId, token: token });
-    })
-})
-
-test.describe("Negative test cases", async ({ }) => {
+test.describe("Test cases", async () => {
 
     test("Delete All Books - wrong userId", async ({ addBooksApi }) => {
         await addBooksApi.deleteAllBooks({ userId: `${userId}e`, token: token, idEmptyIncorrect: true, statusCode: UNAUTHORIZED });
@@ -85,6 +82,10 @@ test.describe("Negative test cases", async ({ }) => {
 
     test("Delete All Books - token null", async ({ addBooksApi }) => {
         await addBooksApi.deleteAllBooks({ userId: userId, token: null, tokenEmptyIncorrect: true, statusCode: UNAUTHORIZED });
+    })
+
+    test("Delete All Books - happy flow", async ({ addBooksApi }) => {
+        await addBooksApi.deleteAllBooks({ userId: userId, token: token });
     })
 
 })

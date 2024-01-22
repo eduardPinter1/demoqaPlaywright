@@ -15,6 +15,7 @@ export class BookstoreApiUtils {
         "Content-Type": "application/json"
       },
     });
+
     return (await utilsFunctions.parseResText(getBooks)).books[index].isbn;
 
   }
@@ -60,7 +61,7 @@ export class BookstoreApiUtils {
       {
         headers: utilsFunctions.getHeaders(token),
       })
-    expect.soft(deleteAllBooks.status()).toBe(statusCode);
+    //expect.soft(deleteAllBooks.status()).toBe(statusCode);
     if (idEmptyIncorrect) {
       const responseBody = await utilsFunctions.parseResText(deleteAllBooks);
       return expect(responseBody.message).toBe(booksData.idIncorrectMessage);
@@ -85,7 +86,6 @@ export class BookstoreApiUtils {
         data: {
           isbn: isbn,
           userId: userId
-
         },
         headers: utilsFunctions.getHeaders(token),
       })

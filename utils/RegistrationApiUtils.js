@@ -2,7 +2,7 @@ const { expect, request } = require('@playwright/test');
 const { UtilsFunctions } = require('./UtilsFunctions');
 let utilFunctions = new UtilsFunctions();
 
-const urlApi = utilFunctions('../fixtures/ApiUrl.json');
+const urlApi = utilFunctions.parseLocalJson('../fixtures/ApiUrl.json');
 const { CREATED } = require('./statusCodes');
 export class RegistrationApiUtils {
 

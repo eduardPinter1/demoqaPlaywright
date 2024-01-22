@@ -41,7 +41,7 @@ test.describe("Negative test cases", async () => {
 
     })
 
-    test("Register user - username double", async ({ registrationApiUtil }) => {
+    test("Register user - username float", async ({ registrationApiUtil }) => {
         await registrationApiUtil.registerUser({ username: 15.15, fail: true, statusCode: BAD_REQUEST, errorMessage: userData.login.resultMessage });
 
     })
@@ -81,7 +81,7 @@ test.describe("Negative test cases", async () => {
 
     })
 
-    test("Register - password double", async ({ registrationApiUtil }) => {
+    test("Register - password float", async ({ registrationApiUtil }) => {
         await registrationApiUtil.registerUser({ password: 15.15, fail: true, statusCode: BAD_REQUEST, errorMessage: userData.login.resultMessage });
 
     })
