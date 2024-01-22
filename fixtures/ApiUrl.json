@@ -1,8 +1,8 @@
 {
-    "registerApi": "Account/v1/User",
-    "generateTokenLogin": "Account/v1/GenerateToken",
-    "loginUserId": "Account/v1/Login",
-    "books": "BookStore/v1/Books",
-    "book": "BookStore/v1/Book"
-
+  "registerApi": "Account/v1/User",
+  "generateTokenLogin": "Account/v1/GenerateToken",
+  "authorizeUser": "Account/v1/Authorized",
+  "loginUserId": "Account/v1/Login",
+  "books": "BookStore/v1/Books",
+  "book": "BookStore/v1/Book"
 }
