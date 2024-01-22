@@ -13,9 +13,7 @@ export class DeleteUserApiUtils {
         statusCode = DELETED }) {
         const apiContext = await request.newContext();
         const deleteUserApi = await apiContext.delete(url, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            }
+            headers: utilFunctions.getHeaders(token),
         })
         expect(await deleteUserApi.status()).toBe(statusCode);
 

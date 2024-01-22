@@ -1,9 +1,6 @@
 import { test } from '../../modules/base';
 const { BAD_REQUEST, NOT_ACCEPTABLE } = require('../../utils/statusCodes');
-const userData = JSON.parse(JSON.stringify(require('../../fixtures/userData.json')));
-const { UtilsFunctions } = require('../../utils/UtilsFunctions');
-let utilFunctions = new UtilsFunctions();
-
+let userData = JSON.parse(JSON.stringify(require('../../fixtures/userData.json')));
 
 test.describe("Positive test cases", async () => {
     let username = "ep" + utilFunctions.getRandomInt(1000);
@@ -104,5 +101,3 @@ test.describe("Negative test cases", async () => {
 
     })
 })
-
-

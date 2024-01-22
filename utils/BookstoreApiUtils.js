@@ -1,11 +1,10 @@
 const { expect, request } = require("@playwright/test");
-const urlApi = JSON.parse(JSON.stringify(require("../fixtures/ApiUrl.json")));
-const booksData = JSON.parse(
-  JSON.stringify(require("../fixtures/bookstore.json"))
-);
-const { DELETED, CREATED } = require('./statusCodes');
 const { UtilsFunctions } = require("./UtilsFunctions");
 let utilsFunctions = new UtilsFunctions();
+const urlApi = utilsFunctions.parseLocalJson("../fixtures/ApiUrl.json");
+const booksData = utilsFunctions.parseLocalJson("../fixtures/bookstore.json");
+const { DELETED, CREATED } = require('./statusCodes');
+
 
 export class BookstoreApiUtils {
 
@@ -35,14 +34,10 @@ export class BookstoreApiUtils {
         'collectionOfIsbns': [{ 'isbn': isbn }],
         'userId': userId,
       },
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
+      headers: utilsFunctions.getHeaders(token),
     });
     expect.soft(addBooks.status()).toBe(statusCode);
     const responseBody = await utilsFunctions.parseResText(addBooks);
-    console.log(responseBody);
     if (incorrectIsbn) {
       return expect(await responseBody.message).toBe(booksData.wrongBookIsbn);
     }
@@ -61,23 +56,20 @@ export class BookstoreApiUtils {
     statusCode = DELETED,
     tokenEmptyIncorrect = false }) {
     const apiContext = await request.newContext();
-    const deleteAllBooks = await apiContext.delete(urlApi.books + `?UserId=${userId}`,
+    const deleteAllBooks = await apiContext.delete(`${urlApi.books}?UserId=${userId}`,
       {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
-
+        headers: utilsFunctions.getHeaders(token),
       })
     expect.soft(deleteAllBooks.status()).toBe(statusCode);
-    if (idEmptyIncorrect === true) {
+    if (idEmptyIncorrect) {
       const responseBody = await utilsFunctions.parseResText(deleteAllBooks);
       return expect(responseBody.message).toBe(booksData.idIncorrectMessage);
     }
-    if (tokenEmptyIncorrect === true) {
+    if (tokenEmptyIncorrect) {
       const responseBody = await utilsFunctions.parseResText(deleteAllBooks);
       return expect(responseBody.message).toBe(booksData.notAuthMessage);
     }
+
     return;
   }
 
@@ -95,11 +87,7 @@ export class BookstoreApiUtils {
           userId: userId
 
         },
-        headers: {
-          'Authorization': "Bearer " + token,
-          'Content-Type': 'application/json'
-        },
-
+        headers: utilsFunctions.getHeaders(token),
       })
     expect(deleteBooks.status).toBe(statusCode)
   }

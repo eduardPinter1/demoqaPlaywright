@@ -7,7 +7,6 @@ import { BookstoreApiUtils } from '../utils/BookstoreApiUtils';
 const testPages = baseTest.extend({
     wpage: [
         async ({ }, use, testInfo) => {
-            // Configure LambdaTest platform for cross-browser testing
             const browser = await chromium.launch();
             const context = await browser.newContext();
             const page = await context.newPage();
@@ -18,15 +17,6 @@ const testPages = baseTest.extend({
         },
         { auto: "true" },
     ],
-    // login: async ({ wpage }, use) => {
-    //     await use(new Login(wpage));
-    // },
-    // loginBL: async ({ wpage }, use) => {
-    //     await use(new LoginBusinessLogic(wpage));
-    // },
-    // general: async ({ wpage }, use) => {
-    //     await use(new General(wpage));
-    // },
     loginApiUtils: async ({ wpage }, use) => {
         await use(new LoginApiUtils(wpage));
     },

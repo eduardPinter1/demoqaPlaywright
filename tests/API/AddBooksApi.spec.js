@@ -1,15 +1,12 @@
 import { test } from '../../modules/base';
 const userData = JSON.parse(JSON.stringify(require('../../fixtures/userData.json')));
 const { BAD_REQUEST, UNAUTHORIZED } = require('../../utils/statusCodes');
-let response;
 let token;
 let userId;
 let bookIsbn;
 
-//test.describe.configure({ mode: 'serial' });
-
 test.beforeEach(async ({ loginApiUtils, addBooksApi }) => {
-    response = await loginApiUtils.getTokenAndUserId({ username: userData.login.username, password: userData.login.password });
+    let response = await loginApiUtils.getTokenAndUserId({ username: userData.login.username, password: userData.login.password });
     loginApiUtils.authorizeUser({ username: userData.login.username, password: userData.login.password });
     token = await response.token;
     userId = await response.userId;
@@ -20,14 +17,12 @@ test.beforeEach(async ({ loginApiUtils, addBooksApi }) => {
 test.describe("Positive cases", async () => {
     test("Post books - happy flow", async ({ addBooksApi }) => {
         await addBooksApi.postBooks({ isbn: bookIsbn, userId: userId, token: token });
-
     })
 })
 
 test.describe("Negative cases", async () => {
     test("Post books - incorrect book isbn", async ({ addBooksApi }) => {
         await addBooksApi.postBooks({ isbn: `${bookIsbn}4`, userId: userId, token: token, incorrectIsbn: true, statusCode: BAD_REQUEST });
-
     })
 
     test("Post books - wrong userId", async ({ addBooksApi }) => {
