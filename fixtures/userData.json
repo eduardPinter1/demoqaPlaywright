@@ -19,76 +19,25 @@
     "idIncorrectMessage": "User Id not correct!",
     "wrongBookIsbn": "ISBN supplied is not available in Books Collection!"
   },
-  "validLogin": {
-    "userName": "ep3",
-    "password": "Test123!"
+  "negativeDataVariations": {
+    "usernameEmpty": "",
+    "usernameSpcLeft": " ep3",
+    "usernameSpcRight": "ep3 ",
+    "usernameInt": 123,
+    "usernameFloat": 15.15,
+    "usernameBoolean": true,
+    "usernameArray": ["ep3"],
+    "usernameObj": { "username": "ep3" },
+    "usernameNull": null,
+    "passwordEmpty": "",
+    "passwordInteger": 123,
+    "passwordFloat": 15.15,
+    "passwordBoolean": true,
+    "passwordArray": ["Test123!"],
+    "passwordObj": { "password": "Test123!" },
+    "passwordNull": null,
+    "passwordLeftSideEmpty": " Test123!",
+    "passwordRightSideEmpty": "Test123! "
   },
-  "usernameEmpty": {
-    "userName": "",
-    "password": "Test123!"
-  },
-  "usernameLeftSideEmpty": {
-    "userName": " ep3",
-    "password": "Test123!"
-  },
-  "usernameRightSideEmpty": {
-    "userName": "ep3 ",
-    "password": "Test123!"
-  },
-  "usernameInteger": {
-    "userName": 123,
-    "password": "Test123!"
-  },
-  "usernameBoolean": {
-    "userName": true,
-    "password": "Test123!"
-  },
-  "usernameFloat": {
-    "userName": 15.15,
-    "password": "Test123!"
-  },
-  "usernameArray": {
-    "userName": ["ep3"],
-    "password": "Test123!"
-  },
-  "usernameObject": {
-    "userName": { "username": "ep3" },
-    "password": "Test123!"
-  },
-  "passwordEmpty": {
-    "userName": "ep3",
-    "password": ""
-  },
-  "passwordInteger": {
-    "userName": "ep3",
-    "password": 123
-  },
-  "passwordBoolean": {
-    "userName": "ep3",
-    "password": true
-  },
-  "passwordFloat": {
-    "userName": "ep3",
-    "password": 15.15
-  },
-  "passwordArray": {
-    "userName": "ep3",
-    "password": ["Test123!"]
-  },
-  "passwordObject": {
-    "userName": "ep3",
-    "password": { "password": "Test123!" }
-  },
-  "passwordNull": {
-    "userName": "ep3",
-    "password": null
-  },
-  "passwordLeftSideEmpty": {
-    "userName": "ep3",
-    "password": " Test123!"
-  },
-  "passwordRightSideEmpty": {
-    "userName": "ep3",
-    "password": "Test123! "
-  }
+  "negGeneral": {}
 }

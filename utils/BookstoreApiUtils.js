@@ -27,10 +27,11 @@ export class BookstoreApiUtils {
     statusCode = CREATED,
     incorrectIsbn = false,
     wrongUserId = false,
-    noAuth = false
+    noAuth = false,
+    parameter = "post"
   }) {
     const apiContext = await request.newContext();
-    const addBooks = await apiContext.post(urlApi.books, {
+    const addBooks = await apiContext[parameter](urlApi.books, {
       data: {
         'collectionOfIsbns': [{ 'isbn': isbn }],
         'userId': userId,
@@ -55,9 +56,10 @@ export class BookstoreApiUtils {
     token = "",
     idEmptyIncorrect = false,
     statusCode = DELETED,
-    tokenEmptyIncorrect = false }) {
+    tokenEmptyIncorrect = false,
+    parameter = "delete" }) {
     const apiContext = await request.newContext();
-    const deleteAllBooks = await apiContext.delete(`${urlApi.books}?UserId=${userId}`,
+    const deleteAllBooks = await apiContext[parameter](`${urlApi.books}?UserId=${userId}`,
       {
         headers: utilsFunctions.getHeaders(token),
       })
@@ -77,10 +79,11 @@ export class BookstoreApiUtils {
     isbn = "",
     userId = "",
     token = "",
-    statusCode = DELETED
+    statusCode = DELETED,
+    parameter = "delete"
   }) {
     const apiContext = await request.newContext();
-    const deleteBooks = await apiContext.delete(urlApi.book,
+    const deleteBooks = await apiContext[parameter](urlApi.book,
       {
         data: {
           isbn: isbn,

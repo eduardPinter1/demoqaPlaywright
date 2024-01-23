@@ -11,11 +11,12 @@ export class RegistrationApiUtils {
         password = "Test123!",
         statusCode = CREATED,
         fail = false,
-        errorMessage = ""
+        errorMessage = "",
+        parameter = "post"
     }) {
 
         const apiContext = await request.newContext();
-        const registrationResponse = await apiContext.post(urlApi.registerApi,
+        const registrationResponse = await apiContext[parameter](urlApi.registerApi,
             {
                 data: utilFunctions.getPayLoad({ username: username, password: password })
             })

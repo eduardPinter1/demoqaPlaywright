@@ -3,7 +3,7 @@ const { defineConfig, devices } = require('@playwright/test');
 import dotenv from 'dotenv';
 
 dotenv.config({
-  path: `./.env`
+  path: `./.env`,
 })
 /**
  * Read environment variables from file.
@@ -17,11 +17,11 @@ dotenv.config({
 module.exports = defineConfig({
   testDir: './tests',
   /* Run tests in files in parallel */
-  fullyParallel: true,
+  fullyParallel: Boolean(process.env.PARALELL),
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
   /* Retry on CI only */
-  retries: 2,//process.env.CI ? 2 : 0,
+  retries: 1,//process.env.CI ? 2 : 0,
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */

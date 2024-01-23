@@ -10,9 +10,10 @@ export class DeleteUserApiUtils {
         token = "",
         userId = "",
         url = `Account/v1/User/${userId}`,
-        statusCode = DELETED }) {
+        statusCode = DELETED,
+        parameter = "delete" }) {
         const apiContext = await request.newContext();
-        const deleteUserApi = await apiContext.delete(url, {
+        const deleteUserApi = await apiContext[parameter](url, {
             headers: utilFunctions.getHeaders(token),
         })
         expect(await deleteUserApi.status()).toBe(statusCode);

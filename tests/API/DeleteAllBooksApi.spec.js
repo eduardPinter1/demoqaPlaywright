@@ -6,8 +6,8 @@ let userId;
 let booksIsbn = [];
 
 test.beforeAll(async ({ loginApiUtils, addBooksApi }) => {
-    let response = await loginApiUtils.getTokenAndUserId({ payload: "validLogin" });
-    loginApiUtils.authorizeUser({ payload: "validLogin" });
+    let response = await loginApiUtils.getTokenAndUserId({});
+    loginApiUtils.authorizeUser({});
     token = await response.token;
     userId = await response.userId;
     booksIsbn.push(await addBooksApi.getBookIsbnByIndex(0), await addBooksApi.getBookIsbnByIndex(1));
@@ -20,7 +20,7 @@ test.afterEach(async ({ addBooksApi }) => {
     await addBooksApi.deleteAllBooks({ userId: userId, token: token });
 })
 
-test.describe("Delete All books from users collection tests", async () => {
+test.describe("UserId variations", async () => {
 
     test("Delete All Books - wrong userId", async ({ addBooksApi }) => {
         await addBooksApi.deleteAllBooks({ userId: `${userId}e`, token: token, idEmptyIncorrect: true, statusCode: UNAUTHORIZED });
@@ -50,6 +50,10 @@ test.describe("Delete All books from users collection tests", async () => {
         await addBooksApi.deleteAllBooks({ userId: null, token: token, idEmptyIncorrect: true, statusCode: UNAUTHORIZED });
     })
 
+})
+
+test.describe("Token variations", async () => {
+
     test("Delete All Books - wrong token", async ({ addBooksApi }) => {
         await addBooksApi.deleteAllBooks({ userId: userId, token: `${token}e`, tokenEmptyIncorrect: true, statusCode: UNAUTHORIZED });
     })
@@ -77,6 +81,10 @@ test.describe("Delete All books from users collection tests", async () => {
     test("Delete All Books - token null", async ({ addBooksApi }) => {
         await addBooksApi.deleteAllBooks({ userId: userId, token: null, tokenEmptyIncorrect: true, statusCode: UNAUTHORIZED });
     })
+
+})
+
+test.describe("Positive test case", async () => {
 
     test("Delete All Books - happy flow", async ({ addBooksApi }) => {
         await addBooksApi.deleteAllBooks({ userId: userId, token: token });

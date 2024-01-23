@@ -9,19 +9,28 @@ const userData = utilFunctions.parseLocalJson('../fixtures/userData.json');
 export class LoginApiUtils {
 
     async getTokenAndUserId({
-        payload = "validLogin"
+        username = "ep3",
+        password = "Test123!",
+        parameterOne = "post",
+        parameterTwo = "post"
     }) {
 
         let response = {};
         const apiContext = await request.newContext();
-        const loginResponse = await apiContext.post(urlApi.generateTokenLogin,
+        const loginResponse = await apiContext[parameterOne](urlApi.generateTokenLogin,
             {
-                data: utilFunctions.getPayLoad(payload)
+                data: {
+                    "password": password,
+                    "userName": username
+                }
             })
         const loginResponseJson = await loginResponse.json();
         response.token = await loginResponseJson.token;
-        const authResp = await apiContext.post(urlApi.loginUserId, {
-            data: utilFunctions.getPayLoad(payload),
+        const authResp = await apiContext[parameterTwo](urlApi.loginUserId, {
+            data: {
+                "password": password,
+                "userName": userName
+            }
         })
         const authRespJson = await utilFunctions.parseResText(authResp);
         response.userId = authRespJson.userId;
@@ -30,16 +39,21 @@ export class LoginApiUtils {
     }
 
     async loginUser({
-        payload = "validLogin",
+        username = "ep3",
+        password = "Test123!",
         validLogin = true,
         statusCode = OK,
         respMessage = false,
-        messageString = ""
+        messageString = "",
+        parameter = "post"
     }) {
         const apiContext = await request.newContext();
-        const loginResp = await apiContext.post(urlApi.generateTokenLogin,
+        const loginResp = await apiContext[parameter](urlApi.generateTokenLogin,
             {
-                data: utilFunctions.getPayLoad(payload)
+                data: {
+                    "password": password,
+                    "userName": username
+                }
             })
         expect.soft(loginResp.status()).toBe(statusCode);
         if (!validLogin) {
@@ -56,14 +70,19 @@ export class LoginApiUtils {
     }
 
     async authorizeUser({
-        payload = "validLogin",
+        username = "ep3",
+        password = "Test123!",
         statusResp = OK,
-        fail = false
+        fail = false,
+        parameter = "post"
     }) {
         const apiContext = await request.newContext();
-        const response = await apiContext.post(urlApi.authorizeUser,
+        const response = await apiContext[parameter](urlApi.authorizeUser,
             {
-                data: utilFunctions.getPayLoad(payload)
+                data: {
+                    "password": password,
+                    "userName": username
+                }
             })
         expect.soft(response.status()).toBe(statusResp);
         let respJson = await utilFunctions.parseResText(response);
