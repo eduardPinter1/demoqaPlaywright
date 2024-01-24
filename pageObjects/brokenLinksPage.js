@@ -36,24 +36,32 @@ export class BrokenLinksPage {
     async checkImages({
         broken = true
     }) {
-        let urlToImg;
-        let box;
         await this.page.goto("broken");
+        if (broken) {
+            await this.handleImage({ broken: true });
+            return;
+        }
+        await this.handleImage({ broken: false });
+    }
+
+    async handleImage({
+        broken = true
+    }) {
+        let box;
+        let urlToImg;
         if (broken) {
             box = await this.brokenImg.boundingBox();
             expect.soft(box.width, "Broken image should be having width and heigh at 16px").toBe(16);
             expect.soft(box.height, "Broken image should be having width and heigh at 16px").toBe(16);
             await this.page.goto(await this.brokenImg.getAttribute('src'))
             urlToImg = this.page.url();
-            await this.page.locator(`img[src='${urlToImg}']`).isVisible();
-            expect(await this.page.locator(`img[src='${urlToImg}']`)).toBeVisible();
-            return;
+        } else {
+            box = await this.goodImg.boundingBox();
+            expect.soft(box.width, "Loaded images should be having width and heigh more 16px").toBeGreaterThan(16);
+            expect.soft(box.height, "Loaded images should be having width and heigh more 16px").toBeGreaterThan(16);
+            await this.page.goto(await this.goodImg.getAttribute('src'))
+            urlToImg = this.page.url();
         }
-        box = await this.goodImg.boundingBox();
-        expect.soft(box.width, "Loaded images should be having width and heigh more 16px").toBeGreaterThan(16);
-        expect.soft(box.height, "Loaded images should be having width and heigh more 16px").toBeGreaterThan(16);
-        await this.page.goto(await this.goodImg.getAttribute('src'))
-        urlToImg = this.page.url();
         await this.page.locator(`img[src='${urlToImg}']`).isVisible();
         expect(await this.page.locator(`img[src='${urlToImg}']`)).toBeVisible();
     }

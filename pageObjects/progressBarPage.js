@@ -20,16 +20,23 @@ export class ProgressBarPage {
         await expect(await this.progressBar).toHaveAttribute("aria-valuenow", initialValue)
         await this.startStopBtn.click();
         if (pausing) {
-            await this.progressBar.waitFor({ timeout: timeoutValue });
-            await this.startStopBtn.click();
-            let currentValue = await this.progressBar.getAttribute('aria-valuenow');
-            await expect(Number(await currentValue)).toBeGreaterThan(Number(initialValue));
-            await this.startStopBtn.click();
+            await this.handlePause({ timeoutValue: timeoutValue, initialValue: initialValue })
         }
         await this.resetBtn.waitFor({ timeout: resetBtnTimeout });
         await expect(await this.progressBar).toHaveAttribute("aria-valuenow", endingValue)
         await this.resetBtn.click();
         await expect(await this.progressBar).toHaveAttribute("aria-valuenow", initialValue)
+    }
+
+    async handlePause({
+        timeoutValue = 12000,
+        initialValue = "0"
+    }) {
+        await this.progressBar.waitFor({ timeout: timeoutValue });
+        await this.startStopBtn.click();
+        let currentValue = await this.progressBar.getAttribute('aria-valuenow');
+        await expect(Number(await currentValue)).toBeGreaterThan(Number(initialValue));
+        await this.startStopBtn.click();
     }
 
 }

@@ -19,7 +19,7 @@ export class UploadDownloadPage {
             await this.downloadBtn.click()
 
         ])
-        const filePath = downloadPath + await downloadPromise.suggestedFilename()
+        const filePath = `${downloadPath}${await downloadPromise.suggestedFilename()}`
         await downloadPromise.saveAs(filePath)
         await expect(fs.existsSync(filePath)).toBeTruthy();
         await downloadPromise.path();

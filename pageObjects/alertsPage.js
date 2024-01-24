@@ -23,8 +23,7 @@ export class AlertsPage {
             expect(await dialog.type()).toBe(boxType);
             expect(await dialog.message()).toContain(alertMessage);
             if (boxType === "prompt") {
-                await dialog.accept(dialogInput);
-                return;
+                return await dialog.accept(dialogInput);
             }
             action === "accept" ? await dialog.accept() : await dialog.dismiss();
         })
@@ -33,26 +32,30 @@ export class AlertsPage {
                 await this.alertBtn.click();
                 break;
             case "confirm":
-                await this.confirmBoxBtn.click();
-                if (action === "accept") {
-                    await this.confirmResult.waitFor();
-                    await this.page.waitForTimeout(5000);
-                    await expect(await this.confirmResult).toHaveText("You selected Ok");
-
-                    return;
-                }
-                await this.confirmResult.waitFor();
-                await expect(await this.confirmResult).toHaveText("You selected Cancel")
+                await this.handleConfirm(action);
                 break;
             case "prompt":
-                await this.promptBoxBtn.click();
-                await this.promptResult.waitFor();
-                await expect(await this.promptResult).toHaveText(`You entered ${dialogInput}`);
+                await this.handlePrompt(dialogInput);
                 break;
             default:
                 throw new Error("Box type not supported");
-
         }
+    }
 
+    async handleConfirm(action) {
+        await this.confirmBoxBtn.click();
+        if (action === "accept") {
+            await this.confirmResult.waitFor();
+            await this.page.waitForTimeout(5000);
+            return await expect(await this.confirmResult).toHaveText("You selected Ok");
+        }
+        await this.confirmResult.waitFor();
+        await expect(await this.confirmResult).toHaveText("You selected Cancel")
+    }
+
+    async handlePrompt(dialogInput) {
+        await this.promptBoxBtn.click();
+        await this.promptResult.waitFor();
+        await expect(await this.promptResult).toHaveText(`You entered ${dialogInput}`);
     }
 }
