@@ -1,9 +1,14 @@
 import { chromium, test as baseTest } from "@playwright/test";
-//import { General } from "../ui/geters/general";
-import { LoginApiUtils } from "../utils/LoginApiUtils";
-import { RegistrationApiUtils } from '../utils/RegistrationApiUtils'
-import { DeleteUserApiUtils } from "../utils/DeleteUserApiUtils";
-import { BookstoreApiUtils } from '../utils/BookstoreApiUtils';
+import { LoginApiUtils } from "../utils/loginApiUtils";
+import { RegistrationApiUtils } from '../utils/registrationApiUtils'
+import { DeleteUserApiUtils } from "../utils/deleteUserApiUtils";
+import { BookstoreApiUtils } from '../utils/bookstoreApiUtils';
+import { WebTablesPage } from "../pageObjects/webTablesPage";
+import { BrokenLinksPage } from "../pageObjects/brokenLinksPage";
+import { AlertsPage } from "../pageObjects/alertsPage";
+import { UploadDownloadPage } from "../pageObjects/uploadDownloadPage";
+import { ProgressBarPage } from "../pageObjects/progressBarPage";
+
 const testPages = baseTest.extend({
     wpage: [
         async ({ }, use, testInfo) => {
@@ -28,6 +33,21 @@ const testPages = baseTest.extend({
     },
     addBooksApi: async ({ wpage }, use) => {
         await use(new BookstoreApiUtils);
+    },
+    webTablesPage: async ({ wpage }, use) => {
+        await use(new WebTablesPage(wpage));
+    },
+    brokenLinksPage: async ({ wpage }, use) => {
+        await use(new BrokenLinksPage(wpage));
+    },
+    alertPage: async ({ wpage }, use) => {
+        await use(new AlertsPage(wpage));
+    },
+    uploadDownload: async ({ wpage }, use) => {
+        await use(new UploadDownloadPage(wpage));
+    },
+    progressBarPage: async ({ wpage }, use) => {
+        await use(new ProgressBarPage(wpage));
     }
 });
 export const test = testPages;
