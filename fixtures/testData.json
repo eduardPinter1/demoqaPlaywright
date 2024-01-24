@@ -1,0 +1,9 @@
+{
+  "alertPopupMessage": "You clicked a button",
+  "confirmPopupMessage": "Do you confirm action?",
+  "promptPopupMessage": "Please enter your name",
+  "alertBox": "alert",
+  "confirmBox": "confirm",
+  "promptBox": "prompt",
+  "filePathJpeg": "download/sampleFile.jpeg"
+}
