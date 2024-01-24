@@ -1,16 +1,43 @@
 {
-    "registration": {
-        "username": "ep",
-        "passwordPass": "Test123!",
-        "passwordWrong": "test1234",
-        "passwordMessage": "Passwords must have at least one non alphanumeric character, one digit ('0'-'9'), one uppercase ('A'-'Z'), one lowercase ('a'-'z'), one special character and Password must be eight characters or longer.",
-        "usernamePresentMessage": "User exists!",
-        "missingCredentialsMessage": "UserName and Password required."
-    },
-    "login": {
-        "username": "ep3",
-        "password": "Test123!",
-        "resultMessage": "User authorization failed."
-    }
-
+  "registration": {
+    "username": "ep",
+    "passwordPass": "Test123!",
+    "passwordWrong": "test1234",
+    "passwordMessage": "Passwords must have at least one non alphanumeric character, one digit ('0'-'9'), one uppercase ('A'-'Z'), one lowercase ('a'-'z'), one special character and Password must be eight characters or longer.",
+    "usernamePresentMessage": "User exists!",
+    "missingCredentialsMessage": "UserName and Password required."
+  },
+  "login": {
+    "username": "ep3",
+    "password": "Test123!",
+    "resultMessage": "User authorization failed.",
+    "resultMessagePass": "User authorized successfully.",
+    "statusPass": "Success"
+  },
+  "books": {
+    "notAuthMessage": "User not authorized!",
+    "idIncorrectMessage": "User Id not correct!",
+    "wrongBookIsbn": "ISBN supplied is not available in Books Collection!"
+  },
+  "negativeDataVariations": {
+    "usernameEmpty": "",
+    "usernameSpcLeft": " ep3",
+    "usernameSpcRight": "ep3 ",
+    "usernameInt": 123,
+    "usernameFloat": 15.15,
+    "usernameBoolean": true,
+    "usernameArray": ["ep3"],
+    "usernameObj": { "username": "ep3" },
+    "usernameNull": null,
+    "passwordEmpty": "",
+    "passwordInteger": 123,
+    "passwordFloat": 15.15,
+    "passwordBoolean": true,
+    "passwordArray": ["Test123!"],
+    "passwordObj": { "password": "Test123!" },
+    "passwordNull": null,
+    "passwordLeftSideEmpty": " Test123!",
+    "passwordRightSideEmpty": "Test123! "
+  },
+  "negGeneral": {}
 }

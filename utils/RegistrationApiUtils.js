@@ -1,41 +1,33 @@
-const { expect } = require('@playwright/test');
+const { expect, request } = require('@playwright/test');
+const { UtilsFunctions } = require('./utilsFunctions');
+let utilFunctions = new UtilsFunctions();
 
-const urlApi = JSON.parse(JSON.stringify(require('../fixtures/ApiUrl.json')));
+const urlApi = utilFunctions.parseLocalJson('../fixtures/ApiUrl.json');
+const { CREATED } = require('./statusCodes');
+export class RegistrationApiUtils {
 
-const {UtilsFunctions} = require('./UtilsFunctions');
+    async registerUser({
+        username = "ep" + utilFunctions.getRandomInt(1000),
+        password = "Test123!",
+        statusCode = CREATED,
+        fail = false,
+        errorMessage = "",
+        parameter = "post"
+    }) {
 
-class RegistrationApiUtils
-{
-
-    constructor(apiContext)
-    {
-        this.apiContext =apiContext;
-        this.utilsFunctions = new UtilsFunctions(); 
-        
-    }
-
-    async validRegistration(credentials,statusCode,username){
-        const registrationResponse =  await this.apiContext.post(urlApi.registerApi,
+        const apiContext = await request.newContext();
+        const registrationResponse = await apiContext[parameter](urlApi.registerApi,
             {
-                data: credentials
-        
-             } )
-            expect(registrationResponse.status()).toBe(statusCode);
-            const responseBody = await this.utilsFunctions.parseResText(registrationResponse);
-            await expect(responseBody.username).toBe(username)
+                data: utilFunctions.getPayLoad({ username: username, password: password })
+            })
+        expect.soft(registrationResponse.status()).toBe(statusCode);
+        if (!fail) {
+            const responseBody = await utilFunctions.parseResText(registrationResponse);
+            await expect(responseBody.username).toBe(username);
+            return responseBody.userID;
+        } else {
+            const responseBody = await utilFunctions.parseResText(registrationResponse);
+            return await expect(responseBody.message).toBe(errorMessage);
+        }
     }
-
-    async nonValidRegistration(credentials,statusCode, errorMessage){
-        const registrationResponse =  await this.apiContext.post(urlApi.registerApi,
-            {
-                data: credentials
-        
-             })
-            expect(registrationResponse.status()).toBe(statusCode);
-            const responseBody = await this.utilsFunctions.parseResText(registrationResponse);
-            await expect(responseBody.message).toBe(errorMessage);
-    }
-
-
 }
-module.exports = {RegistrationApiUtils};

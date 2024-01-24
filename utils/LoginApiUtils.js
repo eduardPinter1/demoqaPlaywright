@@ -1,71 +1,94 @@
-const { expect } = require('@playwright/test');
-const urlApi = JSON.parse(JSON.stringify(require('../fixtures/ApiUrl.json')));
-const userData = JSON.parse(JSON.stringify(require('../fixtures/userData.json')));
-const { UtilsFunctions } = require('./UtilsFunctions');
+const { expect, request } = require('@playwright/test');
+const { UtilsFunctions } = require('./utilsFunctions');
+const { OK } = require('./statusCodes');
 
-class LoginApiUtils {
+let utilFunctions = new UtilsFunctions();
+const urlApi = utilFunctions.parseLocalJson('../fixtures/ApiUrl.json');
+const userData = utilFunctions.parseLocalJson('../fixtures/userData.json');
 
-    constructor(apiContext) {
-        this.apiContext = apiContext;
-        this.utilsFunctions = new UtilsFunctions();
+export class LoginApiUtils {
 
-    }
-
-    async getTokenAndUserId(userPayLoad) {
+    async getTokenAndUserId({
+        username = "ep3",
+        password = "Test123!",
+        parameterOne = "post",
+        parameterTwo = "post"
+    }) {
 
         let response = {};
-        const loginResponse = await this.apiContext.post(urlApi.generateTokenLogin,
+        const apiContext = await request.newContext();
+        const loginResponse = await apiContext[parameterOne](urlApi.generateTokenLogin,
             {
-                data: userPayLoad
+                data: {
+                    "password": password,
+                    "userName": username
+                }
             })
-
         const loginResponseJson = await loginResponse.json();
-        const token = await loginResponseJson.token;
-        const authResp = await this.apiContext.post(urlApi.loginUserId, {
+        response.token = await loginResponseJson.token;
+        const authResp = await apiContext[parameterTwo](urlApi.loginUserId, {
             data: {
-                "password": "Test123!",
-                "userName": "ep3"
-            },
-            headers: {
-                'Accept': '*/*',
-                'Connection': "keep-alive",
-                'Content-Type': 'application/json',
-
-            },
+                "password": password,
+                "userName": userName
+            }
         })
-        const authRespJson = await this.utilsFunctions.parseResText(authResp);
-        response.token = token;
+        const authRespJson = await utilFunctions.parseResText(authResp);
         response.userId = authRespJson.userId;
+
         return response;
     }
 
-    async validLogin(credentials, statusCode) {
-        const registrationResponse = await this.apiContext.post(urlApi.generateTokenLogin,
+    async loginUser({
+        username = "ep3",
+        password = "Test123!",
+        validLogin = true,
+        statusCode = OK,
+        respMessage = false,
+        messageString = "",
+        parameter = "post"
+    }) {
+        const apiContext = await request.newContext();
+        const loginResp = await apiContext[parameter](urlApi.generateTokenLogin,
             {
-                data: credentials
-
+                data: {
+                    "password": password,
+                    "userName": username
+                }
             })
-        expect(registrationResponse.status()).toBe(statusCode);
-    }
-
-    async nonValidLogin(credentials, statusCode, emptyFields = true, errorMessage) {
-        const registrationResponse = await this.apiContext.post(urlApi.generateTokenLogin,
-            {
-                data: credentials
-
-            })
-        expect(registrationResponse.status()).toBe(statusCode);
-        const responseBody = await this.utilsFunctions.parseResText(registrationResponse);
-        if (!emptyFields) {
-            await expect(responseBody.result).toBe(errorMessage);
-            return;
+        expect.soft(loginResp.status()).toBe(statusCode);
+        if (!validLogin) {
+            const responseBody = await utilFunctions.parseResText(loginResp);
+            if (!respMessage) {
+                return await expect(responseBody.result).toBe(messageString);
+            } else {
+                return await expect(responseBody.message).toBe(messageString);
+            }
+        } else {
+            await expect.soft((await utilFunctions.parseResText(loginResp)).result).toBe(userData.login.resultMessagePass)
+            return await expect((await utilFunctions.parseResText(loginResp)).status).toBe(userData.login.statusPass)
         }
-
-        await expect(responseBody.message).toBe(errorMessage);
-        return;
-
     }
 
+    async authorizeUser({
+        username = "ep3",
+        password = "Test123!",
+        statusResp = OK,
+        fail = false,
+        parameter = "post"
+    }) {
+        const apiContext = await request.newContext();
+        const response = await apiContext[parameter](urlApi.authorizeUser,
+            {
+                data: {
+                    "password": password,
+                    "userName": username
+                }
+            })
+        expect.soft(response.status()).toBe(statusResp);
+        let respJson = await utilFunctions.parseResText(response);
+        if (!fail) {
+            return expect(respJson).toBe(true);
+        } else
+            return expect(respJson).toBe(false);
+    }
 }
-
-module.exports = { LoginApiUtils };
