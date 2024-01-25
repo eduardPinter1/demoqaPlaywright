@@ -5,5 +5,30 @@
   "alertBox": "alert",
   "confirmBox": "confirm",
   "promptBox": "prompt",
-  "filePathJpeg": "download/sampleFile.jpeg"
+  "filePathJpeg": "download/sampleFile.jpeg",
+  "practiseForm": {
+    "name": "Student Name",
+    "gender": "Gender",
+    "email": "Student Email",
+    "mobile": "Mobile",
+    "date": "Date of Birth",
+    "subjects": "Subjects",
+    "hobbies": "Hobbies",
+    "file": "Picture",
+    "adress": "Address",
+    "stateCity": "State and City"
+  },
+  "statesCities": {
+    "ncr": "NCR",
+    "ncrCities": {
+      "delhi": "Delhi",
+      "gurgaon": "Gurgaon",
+      "noida": "Noida"
+    },
+    "haryana": "Haryana",
+    "haryanaCities": {
+      "karnal": "Karnal",
+      "panipat": "Panipat"
+    }
+  }
 }

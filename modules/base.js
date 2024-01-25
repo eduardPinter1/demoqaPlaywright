@@ -8,6 +8,7 @@ import { BrokenLinksPage } from "../pageObjects/brokenLinksPage";
 import { AlertsPage } from "../pageObjects/alertsPage";
 import { UploadDownloadPage } from "../pageObjects/uploadDownloadPage";
 import { ProgressBarPage } from "../pageObjects/progressBarPage";
+import { PractiseFormPage } from "../pageObjects/practiseFormPage";
 
 const testPages = baseTest.extend({
     wpage: [
@@ -48,6 +49,9 @@ const testPages = baseTest.extend({
     },
     progressBarPage: async ({ wpage }, use) => {
         await use(new ProgressBarPage(wpage));
+    },
+    practiseForm: async ({ wpage }, use) => {
+        await use(new PractiseFormPage(wpage));
     }
 });
 export const test = testPages;
