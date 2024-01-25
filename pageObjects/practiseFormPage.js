@@ -66,7 +66,7 @@ export class PractiseFormPage {
 
         let fileName = filePath.split("/")
         fileName = fileName[numDashes];
-        return await this.assertSubmittedValues({
+        await this.assertSubmittedValues({
             firstName: firstName,
             lastName: lastName,
             email: email,
@@ -91,7 +91,6 @@ export class PractiseFormPage {
         mobile = "",
         subject = "",
         adress = ""
-
     }) {
         await this.firstNameField.fill(firstName);
         await this.lastNameField.fill(lastNameField);
