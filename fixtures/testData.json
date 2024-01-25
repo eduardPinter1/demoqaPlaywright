@@ -43,5 +43,6 @@
     "symbolsOnly": "#$%#!@#%$*&",
     "numbersOnly": "12345678901233",
     "lettersOnly": "qwertyuiopasdf"
-  }
+  },
+  "iframeText": "This is a sample page"
 }
