@@ -1,7 +1,6 @@
 import { expect } from '@playwright/test';
 const { UtilsFunctions } = require("../utils/UtilsFunctions");
-let utilsFunctions = new UtilsFunctions();
-
+let rowCount;
 export class WebTablesPage {
 
     constructor(page) {
@@ -13,6 +12,7 @@ export class WebTablesPage {
         this.editRowBtn = this.page.locator("[id*='dit-record']");
         this.rowsPopulated = this.page.locator('[role="row"]:has(.action-buttons)');
         this.registrationForm = this.page.locator(".modal-content");
+        this.utilsFunctions = new UtilsFunctions();
     }
 
     async createTable({
@@ -26,8 +26,7 @@ export class WebTablesPage {
         },
         fail = false
     }) {
-        await this.page.goto("webtables");
-        let rowCount = await this.getPopulatedRowsCount();
+        rowCount = await this.getPopulatedRowsCount();
         await this.addBtn.click();
         await expect(this.registrationForm).toBeInViewport();
         await expect(this.registrationForm).toBeVisible();
@@ -40,6 +39,7 @@ export class WebTablesPage {
             await expect(await this.registrationForm).toBeVisible();
             await expect(await this.registrationForm).toBeAttached();
             await this.closeForm.click();
+
             return expect(await this.rowsPopulated.count()).toBe(rowCount);
         }
         await expect(await this.registrationForm).not.toBeVisible();
@@ -69,18 +69,19 @@ export class WebTablesPage {
     }) {
         let data = [firstName, lastName, age, email, salary, department];
         let increment = 0;
-        let array = await this.rowsPopulated.last().locator('[role="gridcell"]');
-        for await (const num of data) {
-            await expect(await array.nth(increment)).toHaveText(num);
+        let arrayOfPopulatedRow = await this.rowsPopulated.last().locator('[role="gridcell"]');
+        for await (const value of data) {
+            await expect(await arrayOfPopulatedRow.nth(increment)).toHaveText(value);
             increment++;
         }
     }
 
     async getTableRowContent({ index = 1 }) {
         let rowContent = [];
-        let array = await this.rowsPopulated.nth(index).locator('[role="gridcell"]');
-        rowContent = await array.allTextContents();
+        let rowContentArray = await this.rowsPopulated.nth(index).locator('[role="gridcell"]');
+        rowContent = await rowContentArray.allTextContents();
         let content = await rowContent.slice(0, -1)
+
         return content;
     }
 
@@ -90,23 +91,16 @@ export class WebTablesPage {
         closeEdit = false,
         equal = true,
     }) {
-        await this.page.goto("webtables");
-        let rowCount = await this.getPopulatedRowsCount();
-        let randomIndex = utilsFunctions.getRandomInt(rowCount)
-        let rowContent = await this.getTableRowContent({ index: randomIndex })
+        rowCount = await this.getPopulatedRowsCount();
+        let randomIndex = this.utilsFunctions.getRandomInt(rowCount)
+        let randomRowContent = await this.getTableRowContent({ index: randomIndex })
         await this.editRowBtn.nth(randomIndex).click();
-        let el = await this.page.locator(`#${property}`);
-        await el.fill(`${value}`)
-        if (closeEdit) {
-            await this.closeForm.click();
-        }
-        else {
-            await this.submitBtn.click();
-        }
+        await this.page.locator(`#${property}`).fill(`${value}`);
+        closeEdit ? await this.closeForm.click() : await this.submitBtn.click()
         let rowContentChanged = await this.getTableRowContent({ index: randomIndex })
-        if (equal) {
-            return expect(await rowContent).toEqual(await rowContentChanged);
-        }
-        expect(await rowContent).not.toEqual(await rowContentChanged);
+
+        equal
+            ? expect(await randomRowContent).toEqual(await rowContentChanged)
+            : expect(await randomRowContent).not.toEqual(await rowContentChanged);
     }
 }

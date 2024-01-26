@@ -1,6 +1,10 @@
 import { test } from '../../modules/base';
 const data = JSON.parse(JSON.stringify(require('../../fixtures/testData.json')));
 
+test.beforeEach(async ({ wpage }) => {
+    await wpage.goto("webtables");
+})
+
 test("Create table happy flow", async ({ webTablesPage }) => {
     await webTablesPage.createTable({});
 })

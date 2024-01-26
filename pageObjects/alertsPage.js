@@ -47,6 +47,7 @@ export class AlertsPage {
         if (action === "accept") {
             await this.confirmResult.waitFor();
             await this.page.waitForTimeout(5000);
+
             return await expect(await this.confirmResult).toHaveText("You selected Ok");
         }
         await this.confirmResult.waitFor();

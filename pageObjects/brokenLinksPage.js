@@ -25,8 +25,8 @@ export class BrokenLinksPage {
         if (!linkValid) {
             await this.brokenLink.scrollIntoViewIfNeeded();
             await this.brokenLink.click();
-            await expect(status).toBe(statusCode);
-            return;
+
+            return await expect(status).toBe(statusCode);
         }
         await this.validLink.scrollIntoViewIfNeeded()
         await this.validLink.click();
@@ -38,8 +38,7 @@ export class BrokenLinksPage {
     }) {
         await this.page.goto("broken");
         if (broken) {
-            await this.handleImage({ broken: true });
-            return;
+            return await this.handleImage({ broken: true });
         }
         await this.handleImage({ broken: false });
     }

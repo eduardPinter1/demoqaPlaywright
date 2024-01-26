@@ -1,6 +1,9 @@
 import { test } from '../../modules/base';
 const data = JSON.parse(JSON.stringify(require('../../fixtures/testData.json')));
 
+test.beforeEach(async ({ wpage }) => {
+    await wpage.goto("date-picker");
+})
 
 test("Date picker - using date without time", async ({ datePicker }) => {
     await datePicker.selectDate({

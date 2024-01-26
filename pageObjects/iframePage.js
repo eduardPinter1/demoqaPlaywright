@@ -10,7 +10,6 @@ export class IframePage {
         frames = [],
         text = ""
     }) {
-        await this.page.goto("frames")
         for await (const frameId of frames) {
             await expect(await this.page.locator(`#${frameId}`)).toBeAttached();
             const frame = await this.page.frameLocator(`#${frameId}`);
