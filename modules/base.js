@@ -10,6 +10,7 @@ import { UploadDownloadPage } from "../pageObjects/uploadDownloadPage";
 import { ProgressBarPage } from "../pageObjects/progressBarPage";
 import { PractiseFormPage } from "../pageObjects/practiseFormPage";
 import { IframePage } from "../pageObjects/iframePage";
+import { DatePickerPage } from "../pageObjects/datePickerPage";
 
 const testPages = baseTest.extend({
     wpage: [
@@ -53,10 +54,12 @@ const testPages = baseTest.extend({
     },
     practiseForm: async ({ wpage }, use) => {
         await use(new PractiseFormPage(wpage));
-    }
-    ,
+    },
     iframePage: async ({ wpage }, use) => {
         await use(new IframePage(wpage));
+    },
+    datePicker: async ({ wpage }, use) => {
+        await use(new DatePickerPage(wpage));
     }
 });
 export const test = testPages;
