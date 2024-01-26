@@ -46,6 +46,7 @@ export class PractiseFormPage {
         if (emptyFields) {
             await this.clickSubmitBtn();
             expect(this.formFulfilledPresence).not.toBeVisible();
+
             return expect(this.formFulfilledPresence).not.toBeAttached();
         }
         await this.enterValueToFields({
@@ -132,6 +133,7 @@ export class PractiseFormPage {
         dateObj.day = partsOfDate[0];
         dateObj.month = partsOfDate[1];
         dateObj.year = partsOfDate[2];
+
         return dateObj;
     }
 
@@ -150,6 +152,7 @@ export class PractiseFormPage {
         await this.page.setInputFiles('#uploadPicture', [
             filePath,
         ])
+
         return fileName;
     }
 
