@@ -184,15 +184,15 @@ export class PractiseFormPage {
             adress: adress,
             stateCity: `${state} ${city}`
         }
-        await expect(this.page.locator(`td:has-text("${data.practiseForm.name}") + td`)).toHaveText(assertValues.studName);
-        await expect(this.page.locator(`td:has-text("${data.practiseForm.gender}") + td`)).toHaveText(assertValues.gender);
-        await expect(this.page.locator(`td:has-text("${data.practiseForm.email}") + td`)).toHaveText(assertValues.email);
-        await expect(this.page.locator(`td:has-text("${data.practiseForm.mobile}") + td`)).toHaveText(assertValues.mobile);
-        await expect(this.page.locator(`td:has-text("${data.practiseForm.date}") + td`)).toHaveText(assertValues.date);
-        await expect(this.page.locator(`td:has-text("${data.practiseForm.subjects}") + td`)).toHaveText(assertValues.subject);
-        await expect(this.page.locator(`td:has-text("${data.practiseForm.file}") + td`)).toHaveText(assertValues.file);
-        await expect(this.page.locator(`td:has-text("${data.practiseForm.adress}") + td`)).toHaveText(assertValues.adress);
-        await expect(this.page.locator(`td:has-text("${data.practiseForm.stateCity}") + td`)).toHaveText(assertValues.stateCity);
+        await expect(this.page.locator(`td:has-text("${data.practiceForm.name}") + td`)).toHaveText(assertValues.studName);
+        await expect(this.page.locator(`td:has-text("${data.practiceForm.gender}") + td`)).toHaveText(assertValues.gender);
+        await expect(this.page.locator(`td:has-text("${data.practiceForm.email}") + td`)).toHaveText(assertValues.email);
+        await expect(this.page.locator(`td:has-text("${data.practiceForm.mobile}") + td`)).toHaveText(assertValues.mobile);
+        await expect(this.page.locator(`td:has-text("${data.practiceForm.date}") + td`)).toHaveText(assertValues.date);
+        await expect(this.page.locator(`td:has-text("${data.practiceForm.subjects}") + td`)).toHaveText(assertValues.subject);
+        await expect(this.page.locator(`td:has-text("${data.practiceForm.file}") + td`)).toHaveText(assertValues.file);
+        await expect(this.page.locator(`td:has-text("${data.practiceForm.adress}") + td`)).toHaveText(assertValues.adress);
+        await expect(this.page.locator(`td:has-text("${data.practiceForm.stateCity}") + td`)).toHaveText(assertValues.stateCity);
     }
 
     async removeBlockingAds() {

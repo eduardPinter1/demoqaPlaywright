@@ -26,7 +26,7 @@ export class WebTablesPage {
         },
         fail = false
     }) {
-        rowCount = await this.getPopulatedRowsCount();
+        rowCount = await this.utilsFunctions.getElementCount(this.rowsPopulated);
         await this.addBtn.click();
         await expect(this.registrationForm).toBeInViewport();
         await expect(this.registrationForm).toBeVisible();
@@ -40,11 +40,11 @@ export class WebTablesPage {
             await expect(await this.registrationForm).toBeAttached();
             await this.closeForm.click();
 
-            return expect(await this.rowsPopulated.count()).toBe(rowCount);
+            return expect(await this.utilsFunctions.getElementCount(this.rowsPopulated)).toBe(rowCount);
         }
         await expect(await this.registrationForm).not.toBeVisible();
         await expect(await this.registrationForm).not.toBeAttached();
-        expect(await this.rowsPopulated.count()).toBeGreaterThan(rowCount);
+        expect(await this.utilsFunctions.getElementCount(this.rowsPopulated)).toBeGreaterThan(rowCount);
         await this.assertingOfTableRow({
             firstName: testData.firstName,
             lastName: testData.lastName,
@@ -53,10 +53,6 @@ export class WebTablesPage {
             salary: testData.salary,
             department: testData.department
         })
-    }
-
-    async getPopulatedRowsCount() {
-        return await this.rowsPopulated.count();
     }
 
     async assertingOfTableRow({
@@ -91,7 +87,7 @@ export class WebTablesPage {
         closeEdit = false,
         equal = true,
     }) {
-        rowCount = await this.getPopulatedRowsCount();
+        rowCount = await this.utilsFunctions.getElementCount(this.rowsPopulated);
         let randomIndex = this.utilsFunctions.getRandomInt(rowCount)
         let randomRowContent = await this.getTableRowContent({ index: randomIndex })
         await this.editRowBtn.nth(randomIndex).click();

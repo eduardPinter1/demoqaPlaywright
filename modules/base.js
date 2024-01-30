@@ -13,6 +13,8 @@ import { IframePage } from "../pageObjects/iframePage";
 import { DatePickerPage } from "../pageObjects/datePickerPage";
 import { MenuItemsPage } from "../pageObjects/menuItemsPage";
 import { SortablePage } from "../pageObjects/sortablePage";
+import { DroppablePage } from "../pageObjects/droppablePage";
+import { DraggablePage } from "../pageObjects/draggablePage";
 
 const testPages = baseTest.extend({
     wpage: [
@@ -65,10 +67,15 @@ const testPages = baseTest.extend({
     },
     menuItemsPage: async ({ wpage }, use) => {
         await use(new MenuItemsPage(wpage));
-    }
-    ,
+    },
     sortablePage: async ({ wpage }, use) => {
         await use(new SortablePage(wpage));
+    },
+    droppablePage: async ({ wpage }, use) => {
+        await use(new DroppablePage(wpage));
+    },
+    draggablePage: async ({ wpage }, use) => {
+        await use(new DraggablePage(wpage));
     }
 });
 export const test = testPages;

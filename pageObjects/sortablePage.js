@@ -16,22 +16,22 @@ export class SortablePage {
         changedItem = true,
         items = "listItems"
     }) {
-        let moved;
+        let movingElement;
         let beforeMoving;
         let listItemTextOnChangingIndex;
         if (items === "listItems") {
-            moved = await this.page.locator(`#demo-tabpane-list div.list-group-item:has-text("${rowNum}")`)
+            movingElement = await this.page.locator(`#demo-tabpane-list div.list-group-item:has-text("${rowNum}")`)
             beforeMoving = await this.getAllValues({});
             listItemTextOnChangingIndex = await this.getItemTextByIndex({ index: index });
-            await moved.dragTo(this.listItems.nth(index));
+            await movingElement.dragTo(this.listItems.nth(index));
             changedOrder ? expect(await this.getAllValues({})).toBe(await beforeMoving) : expect(await this.getAllValues({})).not.toBe(await beforeMoving);
             return changedItem ? expect(await this.getItemTextByIndex({ index: index })).not.toBe(listItemTextOnChangingIndex) : expect(await this.getItemTextByIndex({ index: index })).toBe(listItemTextOnChangingIndex)
         }
         await this.gridTabItem.click();
-        moved = await this.page.locator(`#demo-tabpane-grid div.list-group-item:has-text("${rowNum}")`)
+        movingElement = await this.page.locator(`#demo-tabpane-grid div.list-group-item:has-text("${rowNum}")`)
         beforeMoving = await this.getAllValues({ items: "gridItems" });
         listItemTextOnChangingIndex = await this.getItemTextByIndex({ index: index, items: "gridItems" });
-        await moved.dragTo(this.gridItems.nth(index));
+        await movingElement.dragTo(this.gridItems.nth(index));
         changedOrder ? expect(await this.getAllValues({ items: "gridItems" })).toBe(await beforeMoving) : expect(await this.getAllValues({ items: "gridItems" })).not.toBe(await beforeMoving);
         changedItem ? expect(await this.getItemTextByIndex({ index: index, items: "gridItems" })).not.toBe(listItemTextOnChangingIndex) : expect(await this.getItemTextByIndex({ index: index, items: "gridItems" })).toBe(listItemTextOnChangingIndex)
     }

@@ -6,7 +6,7 @@
   "confirmBox": "confirm",
   "promptBox": "prompt",
   "filePathJpeg": "download/sampleFile.jpeg",
-  "practiseForm": {
+  "practiceForm": {
     "name": "Student Name",
     "gender": "Gender",
     "email": "Student Email",
@@ -48,5 +48,11 @@
   "day": "20",
   "month": "May",
   "year": "2024",
-  "time": "15:00"
+  "time": "15:00",
+  "droppedIn": "Dropped!",
+  "colorDropped": "rgb(70, 130, 180)",
+  "greedyInnerMsg": "Inner droppable (greedy)",
+  "crosshairCursor": "crosshair",
+  "moveCursor": "move",
+  "autoCursor": "auto"
 }
