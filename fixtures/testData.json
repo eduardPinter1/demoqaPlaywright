@@ -1,0 +1,58 @@
+{
+  "alertPopupMessage": "You clicked a button",
+  "confirmPopupMessage": "Do you confirm action?",
+  "promptPopupMessage": "Please enter your name",
+  "alertBox": "alert",
+  "confirmBox": "confirm",
+  "promptBox": "prompt",
+  "filePathJpeg": "download/sampleFile.jpeg",
+  "practiceForm": {
+    "name": "Student Name",
+    "gender": "Gender",
+    "email": "Student Email",
+    "mobile": "Mobile",
+    "date": "Date of Birth",
+    "subjects": "Subjects",
+    "hobbies": "Hobbies",
+    "file": "Picture",
+    "adress": "Address",
+    "stateCity": "State and City"
+  },
+  "statesCities": {
+    "ncr": "NCR",
+    "ncrCities": {
+      "delhi": "Delhi",
+      "gurgaon": "Gurgaon",
+      "noida": "Noida"
+    },
+    "haryana": "Haryana",
+    "haryanaCities": {
+      "karnal": "Karnal",
+      "panipat": "Panipat"
+    }
+  },
+  "emailFormats": {
+    "noSymbol": "eetest.com",
+    "noDot": "ee@testcom",
+    "noDomainWithDot": "ee@test.",
+    "noDomainWithoutDot": "ee@test.",
+    "noMailServer": "ee@.com",
+    "noUsername": "@test.com"
+  },
+  "stringVariations": {
+    "symbolsOnly": "#$%#!@#%$*&",
+    "numbersOnly": "12345678901233",
+    "lettersOnly": "qwertyuiopasdf"
+  },
+  "iframeText": "This is a sample page",
+  "day": "20",
+  "month": "May",
+  "year": "2024",
+  "time": "15:00",
+  "droppedIn": "Dropped!",
+  "colorDropped": "rgb(70, 130, 180)",
+  "greedyInnerMsg": "Inner droppable (greedy)",
+  "crosshairCursor": "crosshair",
+  "moveCursor": "move",
+  "autoCursor": "auto"
+}

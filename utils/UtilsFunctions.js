@@ -16,14 +16,17 @@ class UtilsFunctions {
   getHeaders(token) {
     return {
       Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
-    }
+      'Content-Type': 'application/json',
+    };
   }
 
   getPayLoad(presetName) {
     return userData[presetName];
   }
 
+  async getElementCount(element) {
+    return await element.count();
+  }
 }
 
-module.exports = { UtilsFunctions }
+module.exports = { UtilsFunctions };

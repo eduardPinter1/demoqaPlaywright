@@ -1,9 +1,21 @@
 import { chromium, test as baseTest } from "@playwright/test";
-//import { General } from "../ui/geters/general";
-import { LoginApiUtils } from "../utils/LoginApiUtils";
-import { RegistrationApiUtils } from '../utils/RegistrationApiUtils'
-import { DeleteUserApiUtils } from "../utils/DeleteUserApiUtils";
-import { BookstoreApiUtils } from '../utils/BookstoreApiUtils';
+import { LoginApiUtils } from "../utils/loginApiUtils";
+import { RegistrationApiUtils } from '../utils/registrationApiUtils'
+import { DeleteUserApiUtils } from "../utils/deleteUserApiUtils";
+import { BookstoreApiUtils } from '../utils/bookstoreApiUtils';
+import { WebTablesPage } from "../pageObjects/webTablesPage";
+import { BrokenLinksPage } from "../pageObjects/brokenLinksPage";
+import { AlertsPage } from "../pageObjects/alertsPage";
+import { UploadDownloadPage } from "../pageObjects/uploadDownloadPage";
+import { ProgressBarPage } from "../pageObjects/progressBarPage";
+import { PractiseFormPage } from "../pageObjects/practiseFormPage";
+import { IframePage } from "../pageObjects/iframePage";
+import { DatePickerPage } from "../pageObjects/datePickerPage";
+import { MenuItemsPage } from "../pageObjects/menuItemsPage";
+import { SortablePage } from "../pageObjects/sortablePage";
+import { DroppablePage } from "../pageObjects/droppablePage";
+import { DraggablePage } from "../pageObjects/draggablePage";
+
 const testPages = baseTest.extend({
     wpage: [
         async ({ }, use, testInfo) => {
@@ -28,6 +40,42 @@ const testPages = baseTest.extend({
     },
     addBooksApi: async ({ wpage }, use) => {
         await use(new BookstoreApiUtils);
+    },
+    webTablesPage: async ({ wpage }, use) => {
+        await use(new WebTablesPage(wpage));
+    },
+    brokenLinksPage: async ({ wpage }, use) => {
+        await use(new BrokenLinksPage(wpage));
+    },
+    alertPage: async ({ wpage }, use) => {
+        await use(new AlertsPage(wpage));
+    },
+    uploadDownload: async ({ wpage }, use) => {
+        await use(new UploadDownloadPage(wpage));
+    },
+    progressBarPage: async ({ wpage }, use) => {
+        await use(new ProgressBarPage(wpage));
+    },
+    practiseForm: async ({ wpage }, use) => {
+        await use(new PractiseFormPage(wpage));
+    },
+    iframePage: async ({ wpage }, use) => {
+        await use(new IframePage(wpage));
+    },
+    datePicker: async ({ wpage }, use) => {
+        await use(new DatePickerPage(wpage));
+    },
+    menuItemsPage: async ({ wpage }, use) => {
+        await use(new MenuItemsPage(wpage));
+    },
+    sortablePage: async ({ wpage }, use) => {
+        await use(new SortablePage(wpage));
+    },
+    droppablePage: async ({ wpage }, use) => {
+        await use(new DroppablePage(wpage));
+    },
+    draggablePage: async ({ wpage }, use) => {
+        await use(new DraggablePage(wpage));
     }
 });
 export const test = testPages;
