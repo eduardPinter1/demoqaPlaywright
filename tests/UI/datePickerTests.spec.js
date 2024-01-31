@@ -1,5 +1,5 @@
 import { test } from '../../modules/base';
-const data = JSON.parse(JSON.stringify(require('../../fixtures/testData.json')));
+import data from "../../fixtures/testData.json";
 
 test.beforeEach(async ({ wpage }) => {
     await wpage.goto("date-picker");

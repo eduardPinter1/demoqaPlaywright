@@ -72,6 +72,4 @@ export class DatePickerPage {
         await this.page.locator(`div[aria-label*="${month} ${day}"]`).click();
         await this.page.keyboard.press("Escape");
     }
-
-
 }

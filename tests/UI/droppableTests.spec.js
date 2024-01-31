@@ -5,33 +5,33 @@ test.beforeEach(async ({ wpage }) => {
 })
 
 test("Simple drag drop", async ({ droppablePage }) => {
-    await droppablePage.simpleDragDrop({})
+    await droppablePage.dragAndDrop({ tabOption: "simple" })
 })
 
-test("Acceptable drag drop", async ({ droppablePage }) => {
-    await droppablePage.simpleDragDrop({ tabOption: "accept" })
+test("Should be accepting 'Acceptable' element block and not 'Not Acceptable'", async ({ droppablePage }) => {
+    await droppablePage.dragAndDrop({ tabOption: "accept" })
 })
 
-test("Propogation drag drop - greedy and drag onto outer element", async ({ droppablePage }) => {
-    await droppablePage.simpleDragDrop({ tabOption: "propogation", greedy: true, dragOut: true })
+test("Greedy - should mark and change the text on the outer element but not the inner element", async ({ droppablePage }) => {
+    await droppablePage.dragAndDrop({ greedy: true, dragOut: true })
 })
 
-test("Propogation drag drop - greedy and drag onto inner element", async ({ droppablePage }) => {
-    await droppablePage.simpleDragDrop({ tabOption: "propogation", greedy: true, dragOut: false })
+test("Greedy - should mark and change the text on the inner element but not the outer element", async ({ droppablePage }) => {
+    await droppablePage.dragAndDrop({ greedy: true, dragOut: false })
 })
 
-test("Propogation drag drop - not-greedy and drag onto outer element", async ({ droppablePage }) => {
-    await droppablePage.simpleDragDrop({ tabOption: "propogation", greedy: false, dragOut: true })
+test("Not greedy - should mark and change the text of the outer element but not the inner", async ({ droppablePage }) => {
+    await droppablePage.dragAndDrop({ greedy: false, dragOut: true })
 })
 
-test("Propogation drag drop - not-greedy and drag onto inner element", async ({ droppablePage }) => {
-    await droppablePage.simpleDragDrop({ tabOption: "propogation", greedy: false, dragOut: false })
+test("Not greedy - should mark both inner and outer element and change their text", async ({ droppablePage }) => {
+    await droppablePage.dragAndDrop({ greedy: false, dragOut: false })
 })
 
-test("Revert drag drop - reverting", async ({ droppablePage }) => {
-    await droppablePage.simpleDragDrop({ tabOption: "revert", reverting: true })
+test("Should be reverting when dragged into the container", async ({ droppablePage }) => {
+    await droppablePage.dragAndDrop({ tabOption: "revert", reverting: true })
 })
 
-test("Revert drag drop - non-reverting", async ({ droppablePage }) => {
-    await droppablePage.simpleDragDrop({ tabOption: "revert", reverting: false })
+test("Should not be reverting when dragged into the container", async ({ droppablePage }) => {
+    await droppablePage.dragAndDrop({ tabOption: "revert", reverting: false })
 })

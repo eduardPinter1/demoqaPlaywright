@@ -1,4 +1,5 @@
 import { test } from '../../modules/base';
+import data from "../../fixtures/testData.json"
 
 test.beforeEach(async ({ wpage }) => {
     await wpage.goto("dragabble");
@@ -8,29 +9,29 @@ test("Simple drag box", async ({ draggablePage }) => {
     await draggablePage.moveSimpleBox({});
 })
 
-test("Axis - drag X", async ({ draggablePage }) => {
+test("Should be able to drag only by X axis", async ({ draggablePage }) => {
     await draggablePage.moveXOrY({})
 })
-test("Axis - drag Y", async ({ draggablePage }) => {
+test("Should be able to drag only by Y axis", async ({ draggablePage }) => {
     await draggablePage.moveXOrY({ isX: false })
 })
 
-test("Contained in wrapper", async ({ draggablePage }) => {
+test("Should be able to be moved only within the container", async ({ draggablePage }) => {
     await draggablePage.moveContained({});
 })
 
-test("Contained in element", async ({ draggablePage }) => {
+test("Should be able to be moved only within the element", async ({ draggablePage }) => {
     await draggablePage.moveContained({ isWrapped: false });
 })
 
-test("Check for center cursor style", async ({ draggablePage }) => {
-    await draggablePage.checkCursorStyle({ style: "center" })
+test("Should have a center cursor style while moving the element", async ({ draggablePage }) => {
+    await draggablePage.checkCursorStyle({ style: "center", cursor: data.moveCursor })
 })
 
-test("Check for top left cursor style", async ({ draggablePage }) => {
-    await draggablePage.checkCursorStyle({ style: "topLeft" })
+test("Should have top left cursor style while moving the element", async ({ draggablePage }) => {
+    await draggablePage.checkCursorStyle({ style: "topLeft", cursor: data.crosshairCursor })
 })
 
-test("Check for bottom cursor style", async ({ draggablePage }) => {
-    await draggablePage.checkCursorStyle({ style: "bottom" })
+test("Should have the bottom cursor style while moving the element", async ({ draggablePage }) => {
+    await draggablePage.checkCursorStyle({ style: "bottom", cursor: data.autoCursor })
 })

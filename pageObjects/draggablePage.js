@@ -1,5 +1,4 @@
 import { expect } from "../modules/base";
-const data = JSON.parse(JSON.stringify(require("../fixtures/testData.json")));
 
 export class DraggablePage {
     constructor(page) {
@@ -37,7 +36,6 @@ export class DraggablePage {
         await this.dragY.hover();
         await this.mouseMoveElement(x, y);
         await expect(await this.dragY).toHaveCSS("left", "0px");
-
     }
 
     async moveContained({ isWrapped = true }) {
@@ -61,29 +59,31 @@ export class DraggablePage {
             .toHaveScreenshot();
     }
 
-    async checkCursorStyle({ style = "" }) {
+    async checkCursorStyle({ style = "", cursor = "" }) {
         let cursorStyle;
         await this.cursorStyleTab.click();
         switch (style) {
             case "center":
                 await this.cursorCenter.hover();
                 cursorStyle = await this.get_cursor_style();
-                await expect(cursorStyle).toBe(data.moveCursor)
+                await expect(cursorStyle).toBe(cursor)
                 break;
             case "topLeft":
                 await this.cursorTopLeft.hover();
                 cursorStyle = await this.get_cursor_style();
-                await expect(cursorStyle).toBe(data.crosshairCursor)
+                await expect(cursorStyle).toBe(cursor)
                 break;
             case "bottom":
                 await this.cursorBottom.hover();
                 cursorStyle = await this.get_cursor_style();
-                await expect(cursorStyle).toBe(data.moveCursor)
+                await expect(cursorStyle).toBe(cursor)
                 break;
+            default:
+                throw new Error(`Cursor option "${style}" is not avaliable.`)
         }
     }
 
-    async get_cursor_style() {
+    async getCursorStyle() {
         let box = await this.cursorContainer.boundingBox();
         await this.page.mouse.down();
         await this.page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
@@ -92,6 +92,7 @@ export class DraggablePage {
             let cursorType = window.getComputedStyle(element);
             return cursorType.cursor;
         });
+
         return cursorStyle;
     }
 
